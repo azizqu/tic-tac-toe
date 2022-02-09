@@ -1,0 +1,12 @@
+.gameBoard{
+    display: grid;
+    height: 65vh;
+    max-width: 450px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    margin: 2rem;
+}
+.cell{
+    border: solid black;
+    text-align: center;
+}
