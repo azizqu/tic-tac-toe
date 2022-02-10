@@ -1,9 +1,9 @@
 .gameBoard{
     display: grid;
-    height: 65vh;
     max-width: 450px;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    justify-content: center;
+    grid-template-columns: repeat(3, minmax(75px, 100px));
+    grid-template-rows: repeat(3, minmax(75px, 100px));
     margin: 2rem;
 }
 .cell{

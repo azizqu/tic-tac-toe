@@ -19,18 +19,19 @@
         <br> - reset score / restart game
         <br> game history (maybe)
     </div>
-    <div class="gameBoard" style="border: solid red;" >
+    <div class="boardContainer">
+        <div class="gameBoard" style="border: solid red;" >
 <!--        this is where tic tac toe board grid will go-->
-        <div class="cell cell-1"> 1 </div>
-        <div class="cell cell-2"> 2 </div>
-        <div class="cell cell-3"> 3 </div>
-        <div class="cell cell-4"> 4 </div>
-        <div class="cell cell-5"> 5 </div>
-        <div class="cell cell-6"> 6 </div>
-        <div class="cell cell-7"> 7 </div>
-        <div class="cell cell-8"> 8 </div>
-        <div class="cell cell-9"> 9 </div>
-
+            <div class="cell cell-0" data-cell="cell0" style="border-left: none; border-top: none"></div>
+            <div class="cell cell-1" data-cell="cell1" style="border-top: none;"></div>
+            <div class="cell cell-2" data-cell="cell2" style="border-top: none; border-right: none; "></div>
+            <div class="cell cell-3" data-cell="cell3" style="border-left: none;"></div>
+            <div class="cell cell-4" data-cell="cell4"></div>
+            <div class="cell cell-5" data-cell="cell5" style="border-right: none;"></div>
+            <div class="cell cell-6" data-cell="cell6" style="border-left: none; border-bottom: none;"></div>
+            <div class="cell cell-7" data-cell="cell7" style="border-bottom: none;"></div>
+            <div class="cell cell-8" data-cell="cell8" style="border-bottom: none; border-right: none;"></div>
+        </div>
     </div>
 </div>
 <script src="js/script.js"></script>
