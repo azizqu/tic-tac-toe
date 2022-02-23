@@ -12,13 +12,13 @@
 <div class="background">
     <div class="gameNav" style="border: solid">
         this is where game nav menu will be displayed
-        <br> - player 1 / 2 score
-        <br> - cpu score
-        <br> - will include changing CPU difficulty
-        <br> - toggle for PvP
-        <br> - reset score / restart game
-        <br> game history (maybe)
-        <button class="resetGame" id="resetGame"> Reset Game </button>
+
+        <div class="playerScore" id="playerScore"> Player Score: <p> [Score goes here] </p></div>
+        <div class="cpuScore" id="cpuScore"> CPU Score: <p> [Score goes here] </p></div>
+
+        <br> play again btn clears board, reset scores clears current scores. <br>
+        <button class="playAgain" id="playAgain"> Play Again! </button>
+        <button class="resetScores" id="resetScores"> Reset Score </button>
     </div>
     <div class="boardContainer">
         <div class="gameBoard" style="border: solid red;" >

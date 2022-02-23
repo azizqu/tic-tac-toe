@@ -1,14 +1,16 @@
-//gameBoard module
 function gameBoard() {
     const gameCells = document.getElementsByClassName('cell');
-    const resetBtn = document.getElementById('resetGame');
+    const resetBtn = document.querySelector('.playAgain');
+    const playerScore = document.querySelector('.playerScore');
+    const cpuScore = document.querySelector('.cpuScore');
 
 
     let playerX = 0;
     let playerO = 0;
-    let isDraw = false;
-    let movesX = 0;
-    let movesO = 0;
+    let winner = '';
+    let totalMoves = 0;
+    const cpuNumber = getRandomCPU(1, 9);
+    console.log(winner);
 
     let boardObject = {
         row1: ['', '', ''],
@@ -16,52 +18,56 @@ function gameBoard() {
         row3: ['', '', '']
     }
 
-    resetBtn.addEventListener('click', function () {
-        let boardObject = {
-            row1: ['', '', ''],
-            row2: ['', '', ''],
-            row3: ['', '', '']
-        }
-        console.log('cleared boardObj: ' + boardObject)
+    function getRandomCPU(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
+    }
 
-        for (let i = 0; i < gameCells[i].length; i++) {
-            gameCells[i].innerText = '';
-        }
-        checkWinner().playerX = 0;
-        checkWinner().playerO = 0;
-
-    })
-
-
-    const cpuTurn = (cpuNum) => {
+    function cpuTurn(cpuNum){
         //check if winner is declared prior to making a cpu move again
-        if (cpuNum) {
-            // if(gameCells[cpuNum])
-            // console.log(checkWinner().winnerDeclared);
-            if (cpuNum < 3 && boardObject.row1[cpuNum - 1] === '') {
-                boardObject.row1.splice(cpuNum - 1, 1, 'O');
-                gameCells[cpuNum - 1].innerText = 'O';
-                movesO++;
+        let vacant; //vacant cells
+        let whoWon = checkWinner();
 
-            } else if (cpuNum >= 3 && cpuNum <= 6 && boardObject.row2[cpuNum - 4] === '') {
-                boardObject.row2.splice((cpuNum - 4), 1, 'O');
-                gameCells[cpuNum - 1].innerText = 'O';
-                movesO++;
+        if ((cpuNum < 3 && boardObject.row1[cpuNum - 1] === '') && whoWon === 'no winner') {
+            boardObject.row1.splice(cpuNum - 1, 1, 'O');
+            gameCells[cpuNum - 1].innerText = 'O';
+            vacant = true;
+            totalMoves++;
+            checkWinner();
+            updateDisplay();
 
-            } else if (cpuNum > 6 && cpuNum <= 9 && boardObject.row3[cpuNum - 7] === '') {
-                boardObject.row3.splice((cpuNum - 7), 1, 'O');
-                gameCells[cpuNum - 1].innerText = 'O';
-                movesO++;
 
-            } else {
-                cpuTurn(getRandomCPU(1, 9)); //try another random num
-            }
+        } else if ((cpuNum >= 3 && cpuNum <= 6 && boardObject.row2[cpuNum - 4] === '') && whoWon === 'no winner') {
+            boardObject.row2.splice((cpuNum - 4), 1, 'O');
+            gameCells[cpuNum - 1].innerText = 'O';
+            vacant = true;
+            totalMoves++;
+            checkWinner();
+            updateDisplay();
 
+        } else if ((cpuNum > 6 && cpuNum <= 9 && boardObject.row3[cpuNum - 7] === '') && whoWon === 'no winner') {
+            boardObject.row3.splice((cpuNum - 7), 1, 'O');
+            gameCells[cpuNum - 1].innerText = 'O';
+            vacant = true;
+            totalMoves++;
+            checkWinner();
+            updateDisplay();
+        }
+
+        if (!vacant && totalMoves < 9 && winner === '') {
+            return cpuTurn(getRandomCPU(1, 9)); //try another random num
         }
 
     }
 
-    const draw = (boardObject, cpuNumber) => {
+    function playerTurn(){
+        // let whoWon = checkWinner();
+        //
+        // // if(whoWon !== 'no winner'){
+        // //      return updateDisplay();
+        // //
+        // // }
 
         boardObject.row1.forEach((mark, index) => {
             gameCells[index].innerText = mark;
@@ -75,58 +81,81 @@ function gameBoard() {
             gameCells[index + 6].innerText = mark;
 
         });
-        cpuTurn(cpuNumber);
-    }
-    console.log(gameCells);
 
+    }
+
+    console.log(gameCells);
 
     for (let i = 0; i < gameCells.length; i++) {
         gameCells[i].addEventListener('click', function () {
-            console.log("index of board: " + i);
 
             if (i < 3 && boardObject.row1[i] === '') { //row 1
                 boardObject.row1.splice(i, 1, 'X');
-                movesX++;
+
 
             } else if ((i >= 3 && i < 6) && boardObject.row2[i - 3] === '') { //row 2
                 boardObject.row2.splice((i - 3), 1, 'X');
-                movesX++;
 
 
             } else if ((i >= 6 && i < 9) && boardObject.row3[i - 6] === '') { //row 3
                 boardObject.row3.splice((i - 6), 1, 'X');
-                movesX++;
 
             } else {
                 return alert('Please select a valid unoccupied space');
             }
+            totalMoves++;
 
-            const cpuNumber = getRandomCPU(1, 9);
-            console.log(boardObject);
-            draw(boardObject, cpuNumber);
-
+            playerTurn();
             checkWinner();
-
-            // if (movesX >= 3) {
-            //     checkWinner();
-            // }
-
+            updateDisplay();
+            cpuTurn(cpuNumber);
 
         })
+
     }
 
-    const changeTurn = () => {
-        let turn = Player().playerX;
-        return turn === Player().playerX ? Player().playerO : Player().playerX;
+//check winner returns - update display here
+
+    function updateDisplay() {
+        checkWinner();
+
+        if (winner === 'X') {
+            playerX++;
+            return playerScore.innerText = playerX;
+
+        }
+        if (winner === 'O') {
+            playerO++;
+            return cpuScore.innerText = playerO;
+
+        }
+        if (winner === 'draw') {
+            return alert('its a draw!');
+        }
+        return 'noUpdate'
     }
 
-    function getRandomCPU(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+    function resetBoard() { //resets board, array and moves counter
+        for (let i = 0; i < gameCells.length; i++) {
+            gameCells[i].innerText = '';
+            console.log(gameCells);
+        }
+        boardObject = {
+            row1: ['', '', ''],
+            row2: ['', '', ''],
+            row3: ['', '', '']
+        }
+        winner = '';
+        totalMoves = 0;
+
+        console.log(boardObject);
     }
 
-    function checkWinner(){
+    resetBtn.addEventListener("click", () => {
+        resetBoard();
+    })
+
+    function checkWinner() {
 
         const winningCombos = [
             [0, 1, 2],//row1 horiz
@@ -139,81 +168,35 @@ function gameBoard() {
             [2, 4, 6] //diagonal
         ];
 
-        // let winnerDeclared = {win: false, player: ''}
-
-        for (let winCondition of winningCombos) {
-            if (winCondition.every(w => gameCells[w].innerText === "X")) {
-                playerX++
-                console.log('Player X wins: ' + playerX)
-                return alert('Player X Wins!');
-                // return winnerDeclared.win = {win:true, player: 'playerX'}
-                //end game
-            }
-            if (winCondition.every(w => gameCells[w].innerText === "O")) {
-                playerO++
-                console.log('Player O wins: ' + playerO);
-                return alert('Player O Wins!');
-                // return winnerDeclared = {win:true, player: 'playerO'}
-                //end game
-            } else {
-                console.log("NO WINNER YET...KEEP PLAYING");
-                // console.log('Moves for X: ' + movesX);
-                // console.log('Moves for O: ' + movesO);
-            }
+        let boardArray = []; //flattened array to compare to winningCombos
+        for (const boardKey in boardObject) {
+            boardArray = boardArray.concat(boardObject[boardKey]);
         }
 
-        return {
-            playerX,
-            playerO
-        };
+        let winnerDeclared = false;
+
+        for (let winCondition of winningCombos) {
+            if ((winCondition.every(w => boardArray[w] === 'X'))) {
+                winner = 'X';
+                winnerDeclared = true;
+                return 'user';
+            }
+            if (winCondition.every(w => boardArray[w] === 'O')) {
+                winner = 'O';
+                winnerDeclared = true;
+                return 'cpu';
+            }
+
+        }
+        if ((totalMoves === 9) && winnerDeclared === false) {
+            winner = 'draw';
+            return 'draw'
+        }
+
+        return 'no winner';
     }
 
 }
 
-
-//players stuff put in a factory
-const Player = () => {
-
-    const playerO = "O";
-    const playerX = "X";
-
-    const getSign = () => {
-        //get players sign
-
-    }
-
-    const getTurn = () => {
-        //get players turn
-    }
-
-    return {
-        getSign,
-        getTurn,
-        playerX,
-        playerO
-    }
-}
-
-function displayController() {
-    //get playerX and playerO scores and display them
-}
-
-
-gameBoard();
-
-
-// finder winner
-// const winner = (boardObj, letter) => {
-//     let winner;
-//     const row1 = boardObj.row1.length === 3;
-//     const row2 = boardObj.row2.length === 3;
-//     const row3 = boardObj.row3.length === 3;
-//     const a = boardObj.row1[0].length === 3 && boardObj.row2[0].length === 3 && boardObj.row3[0].length === 3;
-//     const b = boardObj.row1[1].length === 3 && boardObj.row2[1].length === 3 && boardObj.row3[1].length === 3;
-//     const c = boardObj.row1[2].length === 3 && boardObj.row2[2].length === 3 && boardObj.row3[2].length === 3;
-//     const y = boardObj.row1[0].length === 3 && boardObj.row2[1].length === 3 && boardObj.row3[2].length === 3;
-//     const z = boardObj.row1[2].length === 3 && boardObj.row2[1].length === 3 && boardObj.row3[0].length === 3;
-//     winner = row1 ? boardObj.row1.includes(letter) : row2 ? boardObj.row2.includes(letter) : row3 ? boardObj.row3.includes(letter) : a ? !(!boardObj.row1[0].includes(letter) && !boardObj.row2[0].includes(letter) && !boardObj.row3[0].includes(letter)) : b ? !(!boardObj.row1[1].includes(letter) && !boardObj.row2[1].includes(letter) && !boardObj.row3[1].includes(letter)) : c ? !(!boardObj.row1[2].includes(letter) && !boardObj.row2[2].includes(letter) && !boardObj.row3[2].includes(letter)) : y ? !(!boardObj.row1[0].includes(letter) && !boardObj.row2[1].includes(letter) && !boardObj.row3[2].includes(letter)) : z ? !(!boardObj.row1[2].includes(letter) && !boardObj.row2[1].includes(letter) && !boardObj.row3[0].includes(letter)) : false;
-//     return winner;
-//
-// }
+//gameBoard module
+gameBoard();//init gameboard
