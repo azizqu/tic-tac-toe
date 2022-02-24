@@ -15,13 +15,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /*text-align: center;*/
 }
 
 .gameNav{
     display: grid;
     position: relative;
     max-width: 450px;
+    max-height: 275px;
     justify-content: center;
     margin: 2rem;
     font-family: 'Permanent Marker', cursive;
@@ -29,20 +29,28 @@
 
 .playerScore, .cpuScore{
     text-align: center;
+    position: relative;
+    max-height: 10em;
+    margin: 0;
+}
+
+.playerScore h3, .cpuScore h3{
+    margin: 0.5rem;
 }
 
 .playerScore p{
-    font-size: 3rem;
+    font-size: 1.5rem;
     color: green;
 }
 
 .cpuScore p{
-    font-size: 3rem;
+    font-size: 1.5rem;
     color: red;
 }
 
 .playAgain, .resetScores{
     border: solid;
+    background-color: #b90e0e;
     text-align: center;
     margin: 1em;
     width: 100px;
@@ -64,6 +72,7 @@
 .overlay-hidden h1{
     font-family: 'Permanent Marker', cursive;
     position: relative;
+    color: #b90e0e;
     left: 90px;
     top: 30px;
 }
@@ -79,4 +88,12 @@
 .winner{
     display: block;
     text-align: center;
+}
+
+@media screen and (min-width: 40em){
+    .background{
+        position: relative;
+        display: flex;
+        justify-content: center;
+    }
 }
