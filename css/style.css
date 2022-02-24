@@ -5,8 +5,78 @@
     grid-template-columns: repeat(3, minmax(75px, 100px));
     grid-template-rows: repeat(3, minmax(75px, 100px));
     margin: 2rem;
+    font-family: 'Permanent Marker', cursive;
+    font-size: xx-large;
 }
+
+
 .cell{
     border: solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*text-align: center;*/
+}
+
+.gameNav{
+    display: grid;
+    position: relative;
+    max-width: 450px;
+    justify-content: center;
+    margin: 2rem;
+    font-family: 'Permanent Marker', cursive;
+}
+
+.playerScore, .cpuScore{
+    text-align: center;
+}
+
+.playerScore p{
+    font-size: 3rem;
+    color: green;
+}
+
+.cpuScore p{
+    font-size: 3rem;
+    color: red;
+}
+
+.playAgain, .resetScores{
+    border: solid;
+    text-align: center;
+    margin: 1em;
+    width: 100px;
+    top:22px;
+    left:118px;
+    position: relative;
+    font-family: 'Permanent Marker', cursive;
+}
+
+.overlay-hidden{
+    display: none;
+    height: 300px;
+    width: 450px;
+    backdrop-filter: blur(3px);
+    position: absolute;
+    z-index: 1;
+}
+
+.overlay-hidden h1{
+    font-family: 'Permanent Marker', cursive;
+    position: relative;
+    left: 90px;
+    top: 30px;
+}
+
+.overlay{
+    display: block;
+}
+
+.winner-hidden{
+    display: none;
+}
+
+.winner{
+    display: block;
     text-align: center;
 }

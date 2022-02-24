@@ -1,8 +1,11 @@
 function gameBoard() {
     const gameCells = document.getElementsByClassName('cell');
     const resetBtn = document.querySelector('.playAgain');
-    const playerScore = document.querySelector('.playerScore');
-    const cpuScore = document.querySelector('.cpuScore');
+    const scoreReset = document.querySelector('.resetScores');
+    const playerScore = document.querySelector('#playerScore');
+    const cpuScore = document.querySelector('#cpuScore');
+    const overlay = document.querySelector('.overlay-hidden');
+    const winnerDisplay = document.querySelector('.winner-hidden');
 
 
     let playerX = 0;
@@ -70,10 +73,12 @@ function gameBoard() {
         // // }
 
         boardObject.row1.forEach((mark, index) => {
+
             gameCells[index].innerText = mark;
 
         });
         boardObject.row2.forEach((mark, index) => {
+
             gameCells[index + 3].innerText = mark;
 
         });
@@ -121,19 +126,44 @@ function gameBoard() {
 
         if (winner === 'X') {
             playerX++;
-            return playerScore.innerText = playerX;
+            alertMsg();
+            return  playerScore.innerText = playerX;
 
         }
         if (winner === 'O') {
             playerO++;
+            alertMsg();
             return cpuScore.innerText = playerO;
 
         }
         if (winner === 'draw') {
+            alertMsg();
             return alert('its a draw!');
         }
         return 'noUpdate'
     }
+
+    function alertMsg(){
+        overlay.classList.add('overlay');
+
+        winnerDisplay.innerText = 'Player '+winner+ ' Wins!';
+        winnerDisplay.classList.add('winner');
+    }
+
+    function resetScore() {
+        //reset score should also clear board
+        playerX = 0;
+        playerO = 0;
+
+        playerScore.innerText = playerX;
+        cpuScore.innerText = playerO;
+        resetBoard();
+    }
+
+    scoreReset.addEventListener('click', resetScore);
+
+
+
 
     function resetBoard() { //resets board, array and moves counter
         for (let i = 0; i < gameCells.length; i++) {
@@ -147,6 +177,9 @@ function gameBoard() {
         }
         winner = '';
         totalMoves = 0;
+
+        overlay.classList.remove('overlay');
+        winnerDisplay.classList.remove('winner');
 
         console.log(boardObject);
     }
