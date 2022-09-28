@@ -138,16 +138,22 @@ function gameBoard() {
         }
         if (winner === 'draw') {
             alertMsg();
-            return alert('its a draw!');
+            return;
         }
         return 'noUpdate'
     }
 
     function alertMsg(){
-        overlay.classList.add('overlay');
+        if(winner === 'draw'){
+            overlay.classList.add('overlay');
+            winnerDisplay.innerText = 'It`s a draw!';
+            winnerDisplay.classList.add('winner');
+        } else {
+            overlay.classList.add('overlay');
+            winnerDisplay.innerText = 'Player '+winner+ ' Wins!';
+            winnerDisplay.classList.add('winner');
+        }
 
-        winnerDisplay.innerText = 'Player '+winner+ ' Wins!';
-        winnerDisplay.classList.add('winner');
     }
 
     function resetScore() {
@@ -205,6 +211,11 @@ function gameBoard() {
         for (const boardKey in boardObject) {
             boardArray = boardArray.concat(boardObject[boardKey]);
         }
+
+        function emptyIndexies(board){
+            return board.filter(s => s !== 'O' && s !== 'X');
+        }
+        console.log(emptyIndexies(boardArray));
 
         let winnerDeclared = false;
 

@@ -27,6 +27,11 @@
     font-family: 'Permanent Marker', cursive;
 }
 
+.header-title{
+    font-family: 'Permanent Marker', cursive;
+    padding: 10px;
+}
+
 .playerScore, .cpuScore{
     text-align: center;
     position: relative;
@@ -95,5 +100,9 @@
         position: relative;
         display: flex;
         justify-content: center;
+        top: 5rem;
+    }
+    .header-title{
+
     }
 }
