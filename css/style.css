@@ -58,10 +58,9 @@
     background-color: #b90e0e;
     text-align: center;
     margin: 1em;
-    width: 100px;
+    width: 250px;
     top:22px;
-    left:118px;
-    position: relative;
+    /*position: relative;*/
     font-family: 'Permanent Marker', cursive;
 }
 
@@ -72,19 +71,24 @@
     backdrop-filter: blur(3px);
     position: absolute;
     z-index: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .overlay-hidden h1{
     font-family: 'Permanent Marker', cursive;
-    position: relative;
+    /*position: relative;*/
     color: #b90e0e;
     left: 90px;
     top: 30px;
+    text-align: center;
 }
 
 .overlay{
-    display: block;
+    display: flex;
 }
+
 
 .winner-hidden{
     display: none;
@@ -95,6 +99,9 @@
     text-align: center;
 }
 
+
+
+/* for larger media screens: Tablets to desktops */
 @media screen and (min-width: 40em){
     .background{
         position: relative;
@@ -102,7 +109,41 @@
         justify-content: center;
         top: 5rem;
     }
-    .header-title{
 
+    .overlay-hidden{
+        display: none;
+        height: 340px;
+        width: 450px;
+        backdrop-filter: blur(3px);
+        position: absolute;
+        z-index: 1;
     }
+
+    .overlay-hidden h1{
+      
+    }
+
+    .overlay{
+        display: block;
+    }
+    .playAgain, .resetScores{
+        border: solid;
+        background-color: #b90e0e;
+        text-align: center;
+        margin: 1em;
+        width: 100px;
+        top:22px;
+        left:118px;
+        position: relative;
+        font-family: 'Permanent Marker', cursive;
+    }
+
+
+    .footer{
+        display: flex;
+        justify-content: center;
+        bottom: 0;
+        position: fixed;
+    }
+
 }
